@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 interface Props {
   character: any;
@@ -16,15 +17,9 @@ interface Character {
   id: number;
 }
 
-interface Context {
-  params: {
-    id: number;
-  };
-}
-
 const Character = ({ character }: Props) => {
   const router = useRouter();
-  console.log("router", router.query);
+
   return (
     <div>
       <p>{character.name}</p>
@@ -38,7 +33,7 @@ const Character = ({ character }: Props) => {
 
 export default Character;
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`https://rickandmortyapi.com/api/character`);
   const characters = await res.json();
   const paths = characters.results.map((character: Character) => ({
@@ -48,7 +43,7 @@ export async function getStaticPaths() {
   return { paths, fallback: "blocking" };
 }
 
-export async function getStaticProps(context: Context) {
+export const getStaticProps: GetStaticProps = async (context) => {
   const client = new ApolloClient({
     uri: "https://rickandmortyapi.com/graphql",
     cache: new InMemoryCache(),
@@ -57,7 +52,7 @@ export async function getStaticProps(context: Context) {
   const { data } = await client.query({
     query: gql`
       query {
-        character(id: ${context.params.id}) {
+        character(id: ${context.params?.id}) {
           id
           name
           status

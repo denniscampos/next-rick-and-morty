@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { GetStaticProps, GetStaticPaths } from 'next'
 
 interface Props {
   residents: Props[];
@@ -10,12 +11,6 @@ interface Props {
   species: string;
   gender: string;
   id: number;
-}
-
-interface Context {
-  params: {
-    id: number;
-  };
 }
 
 interface Locations {
@@ -46,7 +41,8 @@ const location = ({ residents }: Props) => {
 
 export default location;
 
-export async function getStaticPaths() {
+
+export const getStaticPaths: GetStaticPaths = async() => {
   const res = await fetch(`https://rickandmortyapi.com/api/location`);
 
   const locations = await res.json();
@@ -56,7 +52,8 @@ export async function getStaticPaths() {
   return { paths, fallback: "blocking" };
 }
 
-export async function getStaticProps(context: Context) {
+// export async function getStaticProps(context: Context) {
+  export const getStaticProps: GetStaticProps = async (context) => {
   const client = new ApolloClient({
     uri: "https://rickandmortyapi.com/graphql",
     cache: new InMemoryCache(),
@@ -65,7 +62,7 @@ export async function getStaticProps(context: Context) {
   const { data } = await client.query({
     query: gql`
       query {
-        location(id: ${context.params.id}) {
+        location(id: ${context.params?.id}) {
           id
           name
           type

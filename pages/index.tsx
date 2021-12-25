@@ -3,6 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Link from "next/link";
+import { GetStaticProps } from 'next'
 
 // better name?
 interface Props {
@@ -37,7 +38,8 @@ const Home: NextPage<Props> = ({ locations }: Props) => {
 
 export default Home;
 
-export async function getStaticProps() {
+
+export const getStaticProps: GetStaticProps = async() => {
   const client = new ApolloClient({
     uri: "https://rickandmortyapi.com/graphql",
     cache: new InMemoryCache(),
