@@ -3,10 +3,9 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Link from "next/link";
-import { GetStaticProps } from 'next'
-import Header from "../components/Header"
+import { GetStaticProps } from "next";
+import Header from "../components/Header";
 
-// better name?
 interface Props {
   locations: Props[];
   id: number;
@@ -23,25 +22,27 @@ const Home: NextPage<Props> = ({ locations }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <h1>Rick and Morty</h1>
-      {locations.map((location) => (
-        <Link href={`/location/${location.id}`} key={location.id}>
-          <a>
-            <div>
-              <h3>Location Name: {location.name}</h3>
-              <span>Type: {location.type}</span>
-            </div>
-          </a>
-        </Link>
-      ))}
+      <main className={styles.container}>
+        {locations.map((location) => (
+          <Link href={`/location/${location.id}`} key={location.id}>
+            <a>
+              <section className={styles.location__card}>
+                <div>
+                  <h3 className={styles.location__card__name}>Location Name: {location.name}</h3>
+                  <span className={styles.location__card__type}>Type: {location.type}</span>
+                </div>
+              </section>
+            </a>
+          </Link>
+        ))}
+      </main>
     </div>
   );
 };
 
 export default Home;
 
-
-export const getStaticProps: GetStaticProps = async() => {
+export const getStaticProps: GetStaticProps = async () => {
   const client = new ApolloClient({
     uri: "https://rickandmortyapi.com/graphql",
     cache: new InMemoryCache(),
@@ -68,6 +69,6 @@ export const getStaticProps: GetStaticProps = async() => {
   return {
     props: {
       locations: data.locations.results,
-    }, 
+    },
   };
-}
+};
