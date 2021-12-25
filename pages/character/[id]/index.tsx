@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Header from "../../../components/Header"
 
 interface Props {
   character: any;
@@ -22,6 +23,7 @@ const Character = ({ character }: Props) => {
 
   return (
     <div>
+      <Header />
       <p>{character.name}</p>
       <p>{character.status}</p>
       <p>{character.species}</p>

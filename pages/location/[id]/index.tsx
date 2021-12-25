@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { GetStaticProps, GetStaticPaths } from 'next'
+import Header from "../../../components/Header"
 
 interface Props {
   residents: Props[];
@@ -20,6 +21,7 @@ interface Locations {
 const location = ({ residents }: Props) => {
   return (
     <div>
+      <Header />
       <h1>location</h1>
       <h3>Residents</h3>
       {residents.map((resident) => (
