@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import {
     ApolloClient,
     InMemoryCache,
@@ -8,7 +9,11 @@ import {
 interface Props {
   residents: Props[]
   name: string,
-  image: string
+  image: string,
+  status: string,
+  species: string,
+  gender: string
+  id: number
 }
 
 interface Context {
@@ -27,10 +32,15 @@ const location = ({residents}: Props) => {
             <h1>location</h1>
             <h3>Residents</h3>
             {residents.map((resident, i) => (
+              <Link href={`/character/${resident.id}`} key={resident.id}>
               <div key={i}>
-                <p>{resident.name}</p>
+                <h3>{resident.name}</h3>
+                <span>{resident.status}</span>
+                <span>{resident.species}</span>
+                <span>{resident.gender}</span>
                 <Image src={resident.image} width={300} height={200}/>
               </div>
+              </Link>
             ))}
         </div>
     )
@@ -43,8 +53,7 @@ export async function getStaticPaths() {
 
   const locations = await res.json()
   const paths = locations.results.map((location: Locations) => ({params: { id: location.id.toString() }}))
-  console.log('check params', paths)
-  return {paths, fallback: false}
+  return {paths, fallback: 'blocking'}
 }
 
 
@@ -66,6 +75,8 @@ export async function getStaticProps(context: Context) {
             name
             status
             image
+            species
+            gender
           }
         }
       }
