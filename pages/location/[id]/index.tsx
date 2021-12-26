@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import { GetStaticProps, GetStaticPaths } from 'next'
-import Header from "../../../components/Header"
+import { GetStaticProps, GetStaticPaths } from "next";
+import Header from "../../../components/Header";
+import styles from "../../../styles/Location.module.css";
 
 interface Props {
   residents: Props[];
@@ -22,29 +23,30 @@ const location = ({ residents }: Props) => {
   return (
     <div>
       <Header />
-      <h1>location</h1>
-      <h3>Residents</h3>
-      {residents.map((resident) => (
-        <Link href={`/character/${resident.id}`} key={resident.id}>
-          <a>
-            <div>
-              <h3>{resident.name}</h3>
-              <span>{resident.status}</span>
-              <span>{resident.species}</span>
-              <span>{resident.gender}</span>
-              <Image src={resident.image} width={300} height={200} />
-            </div>
-          </a>
-        </Link>
-      ))}
+      <main className={styles.resident__container}>
+        {residents.map((resident) => (
+          <Link href={`/character/${resident.id}`} key={resident.id}>
+            <a>
+              <section className={styles.resident__container__card}>
+                <Image src={resident.image} width={300} height={200} />
+                <div className={styles.resident__container__card__information}>
+                <h3>{resident.name}</h3>
+                  <span>{resident.status}</span>
+                  <span>{resident.species}</span>
+                  <span>{resident.gender}</span>
+                </div>
+              </section>
+            </a>
+          </Link>
+        ))}
+      </main>
     </div>
   );
 };
 
 export default location;
 
-
-export const getStaticPaths: GetStaticPaths = async() => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`https://rickandmortyapi.com/api/location`);
 
   const locations = await res.json();
@@ -52,10 +54,10 @@ export const getStaticPaths: GetStaticPaths = async() => {
     params: { id: location.id.toString() },
   }));
   return { paths, fallback: "blocking" };
-}
+};
 
 // export async function getStaticProps(context: Context) {
-  export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const client = new ApolloClient({
     uri: "https://rickandmortyapi.com/graphql",
     cache: new InMemoryCache(),
@@ -86,4 +88,4 @@ export const getStaticPaths: GetStaticPaths = async() => {
       residents: data.location.residents,
     },
   };
-}
+};

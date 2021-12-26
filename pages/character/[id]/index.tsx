@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useRouter } from "next/router";
-import { GetStaticPaths, GetStaticProps } from 'next'
-import Header from "../../../components/Header"
+import { GetStaticPaths, GetStaticProps } from "next";
+import Header from "../../../components/Header";
+import styles from "../../../styles/Character.module.css";
 
 interface Props {
   character: any;
@@ -24,11 +25,17 @@ const Character = ({ character }: Props) => {
   return (
     <div>
       <Header />
-      <p>{character.name}</p>
-      <p>{character.status}</p>
-      <p>{character.species}</p>
-      <p>{character.gender}</p>
-      <Image src={character.image} width={300} height={200} />
+      <main className={styles.resident__container}>
+        <section className={styles.resident__container__card}>
+        <Image src={character.image} width={300} height={200} />
+        <div className={styles.resident__container__card__information}>
+          <h3>{character.name}</h3>
+          <span>{character.status}</span>
+          <span>{character.species}</span>
+          <span>{character.gender}</span>
+        </div>
+        </section>
+      </main>
     </div>
   );
 };
@@ -43,7 +50,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 
   return { paths, fallback: "blocking" };
-}
+};
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const client = new ApolloClient({
@@ -70,4 +77,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
       character: data.character,
     },
   };
-}
+};
