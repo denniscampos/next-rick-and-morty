@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Locations from "../components/Locations";
 import { NextPage } from "next";
-import client from "../apolloconfig/apollo"
+import client from "../apolloconfig/apollo";
 import { GET_ALL_LOCATIONS, GET_PAGE_INFO } from "../apolloconfig/queries";
 
 interface Props {
@@ -18,7 +18,7 @@ const Page: NextPage<Props> = ({ locations }) => {
 export default Page;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await client.query({ query: GET_PAGE_INFO})
+  const { data } = await client.query({ query: GET_PAGE_INFO });
 
   const numberOfPages = data.locations.info.pages + 1;
   const arrayOfPages = [...Array(numberOfPages).keys()];
@@ -36,7 +36,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params: { page },
 }: any) => {
-
   const { data } = await client.query({
     query: GET_ALL_LOCATIONS,
     variables: { page: Number(page) },

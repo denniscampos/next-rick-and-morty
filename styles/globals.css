@@ -1,11 +1,12 @@
 * {
-  margin: 0; 
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 html,
 body {
+  background: #24282e;
   width: 100%;
   min-height: 100vh;
   font-size: 16px;

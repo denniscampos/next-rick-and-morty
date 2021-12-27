@@ -1,4 +1,6 @@
 .header {
-    display: flex; 
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  padding: 20px 0;
 }
