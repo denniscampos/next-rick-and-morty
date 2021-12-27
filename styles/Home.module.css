@@ -37,3 +37,25 @@
     font-size: 1.2rem;
     text-align: center;
 }
+
+.page__buttons {
+    display: flex;
+    justify-content: space-evenly;
+    background: #24282E;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.page__buttons button {
+    background: #3A3E42;
+    color: #fff;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 25px;
+}
+
+.page__buttons button:hover {
+    background: #646464;
+}
