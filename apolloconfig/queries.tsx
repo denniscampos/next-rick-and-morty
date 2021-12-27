@@ -1,19 +1,19 @@
-import { gql } from "@apollo/client"
+import { gql } from "@apollo/client";
 
 const GET_ALL_LOCATIONS = gql`
-query Query($page: Int) {
-  locations(page: $page) {
-    results {
-      id
-      name
-      type
+  query Query($page: Int) {
+    locations(page: $page) {
+      results {
+        id
+        name
+        type
+      }
     }
   }
-}
-`
+`;
 
 const GET_PAGE_INFO = gql`
-query {
+  query {
     locations {
       info {
         next
@@ -22,6 +22,6 @@ query {
       }
     }
   }
-`
+`;
 
-export { GET_ALL_LOCATIONS, GET_PAGE_INFO }
+export { GET_ALL_LOCATIONS, GET_PAGE_INFO };

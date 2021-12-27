@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Header from "../../../components/Header";
 import styles from "../../../styles/Location.module.css";
+import client from "../../../apolloconfig/apollo";
 
 interface Props {
   residents: Props[];
@@ -28,9 +29,14 @@ const location = ({ residents }: Props) => {
           <Link href={`/character/${resident.id}`} key={resident.id}>
             <a>
               <section className={styles.resident__container__card}>
-                <Image src={resident.image} width={300} height={200} />
+                <Image
+                  src={resident.image}
+                  alt="character profile card"
+                  width={300}
+                  height={200}
+                />
                 <div className={styles.resident__container__card__information}>
-                <h3>{resident.name}</h3>
+                  <h3>{resident.name}</h3>
                   <span>{resident.status}</span>
                   <span>{resident.species}</span>
                   <span>{resident.gender}</span>
@@ -56,13 +62,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: "blocking" };
 };
 
-// export async function getStaticProps(context: Context) {
 export const getStaticProps: GetStaticProps = async (context) => {
-  const client = new ApolloClient({
-    uri: "https://rickandmortyapi.com/graphql",
-    cache: new InMemoryCache(),
-  });
-
   const { data } = await client.query({
     query: gql`
       query {
