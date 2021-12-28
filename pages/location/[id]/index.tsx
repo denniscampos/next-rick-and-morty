@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { gql } from "@apollo/client";
 import { GetStaticProps, GetStaticPaths } from "next";
 import Header from "../../../components/Header";
@@ -21,9 +22,15 @@ interface Locations {
 }
 
 const location = ({ residents }: Props) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const router = useRouter();
+
   return (
     <div>
       <Header />
+      <div className={styles.goBack__btn}>
+        <button onClick={() => router.back()}>Go Back</button>
+      </div>
       <main className={styles.resident__container}>
         {residents.map((resident) => (
           <Link href={`/character/${resident.id}`} key={resident.id}>

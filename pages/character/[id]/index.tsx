@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { gql } from "@apollo/client";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Header from "../../../components/Header";
@@ -20,9 +21,14 @@ interface Character {
 }
 
 const Character = ({ character }: Props) => {
+  const router = useRouter();
+
   return (
     <div>
       <Header />
+      <div className={styles.goBack__btn}>
+        <button onClick={() => router.back()}>Go Back</button>
+      </div>
       <main className={styles.resident__container}>
         <section className={styles.resident__container__card}>
           <Image
