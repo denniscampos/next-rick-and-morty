@@ -21,6 +21,7 @@ interface Character {
 }
 
 const Character = ({ character }: Props) => {
+  console.log("update", character);
   const router = useRouter();
 
   return (
@@ -39,9 +40,26 @@ const Character = ({ character }: Props) => {
           />
           <div className={styles.resident__container__card__information}>
             <h3>{character.name}</h3>
-            <span>{character.status}</span>
-            <span>{character.species}</span>
-            <span>{character.gender}</span>
+            <span>
+              Status:{" "}
+              <span
+                className={
+                  character.status === "Alive" ? styles.alive : styles.dead
+                }
+              >
+                {character.status}
+              </span>
+            </span>
+            <span>
+              Species: <span>{character.species}</span>
+            </span>
+            <span>
+              Gender: <span>{character.gender}</span>
+            </span>
+            <div className={styles.character__location__and__episode}>
+              <span>Last Known Location: </span><span className={styles.location}>{character.location.name}</span>
+              <span >First Seen in: </span><span className={styles.episode}>{character.episode[0].name}</span>
+            </div>
           </div>
         </section>
       </main>
@@ -72,6 +90,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
           species
           gender
           image
+          location {
+            name
+          }
+          episode {
+            name
+          }
         }
       }
       `,

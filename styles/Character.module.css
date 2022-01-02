@@ -35,7 +35,7 @@
   background: #3a3e42;
   border-radius: 8px;
   width: 300px;
-  height: 300px;
+  height: 445px;
   color: #fff;
   text-align: center;
   margin: 20px 0;
@@ -55,4 +55,34 @@
   display: flex;
   flex-direction: column;
   margin: 10px 0;
+}
+
+.resident__container__card__information h3 {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+
+.alive {
+  color: rgb(3, 214, 3);
+}
+
+.dead {
+  color: rgb(252, 58, 58);
+}
+
+.character__location__and__episode {
+  margin: 10px 0;
+}
+
+.character__location__and__episode span {
+  display: block;
+}
+
+.location {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.episode {
+  font-weight: bold;
 }
