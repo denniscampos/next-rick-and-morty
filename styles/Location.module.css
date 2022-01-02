@@ -20,6 +20,18 @@
   border-bottom: 1px solid rgb(112, 112, 112);
 }
 
+.search__character {
+  display: flex;
+  justify-content: center;
+}
+
+.search__character input {
+  padding: 8px 12px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 5px;
+}
+
 .resident__container {
   display: flex;
   flex-wrap: wrap;
